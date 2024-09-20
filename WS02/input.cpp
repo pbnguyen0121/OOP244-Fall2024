@@ -67,7 +67,7 @@ namespace seneca {
             }
             //condition if value is not within limits
             else if (num < minVal || num > maxVal) {
-                cout << "Invalid value, [" << minVal << "<ENTRY<" << maxVal << "]\n> ";
+                cout << "Only enter values between " << minVal << " and " << maxVal << ", inclusive:\n> ";
                 // clear the failure status to activate cin again
                 cin.clear();
             }
