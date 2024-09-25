@@ -43,6 +43,8 @@ namespace seneca {
     }
 
     void CC::set(const char* cc_name, unsigned long long cc_no, short cvv, short expMon, short expYear)
+        //first data input, expYear are 4 digitals
+        //second data inout, expYear are 2 digitals
     {
         set(); //set to empty state first
         if (validate(cc_name, cc_no, cvv, expMon, expYear)) {
