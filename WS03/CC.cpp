@@ -77,7 +77,33 @@ namespace seneca {
     }
 
     void CC::prnNumber(unsigned long long CCnum)const {
-        //format to print the number
-        cout << CCnum / 1000000000000ull << " " << (CCnum / 100000000ull) - (CCnum / 1000000000000ull) * 10000 << " " << (CCnum / 10000ull) - (CCnum / 100000000ull) * 10000 << " " << CCnum - (CCnum / 10000ull) * 10000;
+        //divide by 1000000000000ull to get the first 4 digits
+        cout.width(4);
+        cout.fill(' ');  // No need for leading zeros in the first group
+        cout << CCnum / 1000000000000ull << " ";
+
+        //get the remainder (right 12 digits) using modulus
+        CCnum = CCnum % 1000000000000ull;
+
+        //set flags for alignment and print the second group of 4 digits
+        cout.fill('0');
+        cout.width(4);   // Set width to 4 for the next group
+        cout.setf(ios::right);  // Ensure right alignment
+        cout << CCnum / 100000000ull << " ";
+
+        //get the remainder (right 8 digits) using modulus
+        CCnum = CCnum % 100000000ull;
+
+        //print the third set of 4 digits
+        cout.fill('0');
+        cout.width(4);
+        cout.setf(ios::right);
+        cout << CCnum / 10000ull << " ";
+
+        //print the last 4 digits
+        cout.fill('0');
+        cout.width(4);
+        cout.setf(ios::right);
+        cout << CCnum % 10000ull;
     }
 }
