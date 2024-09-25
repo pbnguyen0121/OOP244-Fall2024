@@ -73,7 +73,7 @@ namespace seneca {
             unsigned long long cc_no,
             short cvv,
             short expMon = 12,
-            short expYear = 2024);
+            short expYear = 24);
 
         /// <summary>
         /// overload with no arguments
