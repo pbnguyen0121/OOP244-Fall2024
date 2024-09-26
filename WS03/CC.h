@@ -31,7 +31,7 @@ namespace seneca {
         /// This function prints a 16-digit number in a set of 4-digit numbers separated by spaces.
         /// </summary>
         /// <param name="CCnum"></param>
-        void prnNumber(unsigned long long CCnum)const;
+        void prnNumber(unsigned long long no)const;
         
         /// <summary>
         /// Since formatting the output using ostream is not covered yet, the private method display is provided below to be added to the CC class.

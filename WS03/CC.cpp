@@ -43,8 +43,6 @@ namespace seneca {
     }
 
     void CC::set(const char* cc_name, unsigned long long cc_no, short cvv, short expMon, short expYear)
-        //first data input, expYear are 4 digitals
-        //second data inout, expYear are 2 digitals
     {
         set(); //set to empty state first
         if (validate(cc_name, cc_no, cvv, expMon, expYear)) {
@@ -78,34 +76,56 @@ namespace seneca {
         return false;
     }
 
-    void CC::prnNumber(unsigned long long CCnum)const {
-        //divide by 1000000000000ull to get the first 4 digits
-        cout.width(4);
-        cout.fill(' ');  // No need for leading zeros in the first group
-        cout << CCnum / 1000000000000ull << " ";
+    void CC::prnNumber(unsigned long long no)const {
 
-        //get the remainder (right 12 digits) using modulus
-        CCnum = CCnum % 1000000000000ull;
+        //this part made by me
+        
 
-        //set flags for alignment and print the second group of 4 digits
-        cout.fill('0');
-        cout.width(4);   // Set width to 4 for the next group
-        cout.setf(ios::right);  // Ensure right alignment
-        cout << CCnum / 100000000ull << " ";
+        ////divide by 1000000000000ull to get the first 4 digits
+        //cout.width(4);
+        //cout.fill(' ');  // No need for leading zeros in the first group
+        //cout << CCnum / 1000000000000ull << " ";
 
-        //get the remainder (right 8 digits) using modulus
-        CCnum = CCnum % 100000000ull;
+        ////get the remainder (right 12 digits) using modulus
+        //CCnum = CCnum % 1000000000000ull;
 
-        //print the third set of 4 digits
+        ////set flags for alignment and print the second group of 4 digits
+        //cout.fill('0');
+        //cout.width(4);   // Set width to 4 for the next group
+        //cout.setf(ios::right);  // Ensure right alignment
+        //cout << CCnum / 100000000ull << " ";
+
+        ////get the remainder (right 8 digits) using modulus
+        //CCnum = CCnum % 100000000ull;
+
+        ////print the third set of 4 digits
+        //cout.fill('0');
+        //cout.width(4);
+        //cout.setf(ios::right);
+        //cout << CCnum / 10000ull << " ";
+
+        ////print the last 4 digits
+        //cout.fill('0');
+        //cout.width(4);
+        //cout.setf(ios::right);
+        //cout << CCnum % 10000ull;
+
+        //from Instructions
+        cout << no / 1000000000000ull << " ";
+        no %= 1000000000000ull;
         cout.fill('0');
         cout.width(4);
         cout.setf(ios::right);
-        cout << CCnum / 10000ull << " ";
-
-        //print the last 4 digits
-        cout.fill('0');
+        cout << no / 100000000ull << " ";
+        no %= 100000000ull;
         cout.width(4);
-        cout.setf(ios::right);
-        cout << CCnum % 10000ull;
+        cout << no / 10000ull << " ";
+        no %= 10000ull;
+        cout.width(4);
+        cout << no;
+        cout.unsetf(ios::right);
+        cout.fill(' ');
+
+
     }
 }
