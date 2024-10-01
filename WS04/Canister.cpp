@@ -43,20 +43,21 @@ namespace seneca {
 
     Canister::Canister(const char* contentName)
     {
+        m_contentName = nullptr;
         m_diameter = 10.0;
         m_height = 13.0;
         m_contentVolume = 0.0;
         alocpy(m_contentName, contentName);
     }
 
-    Canister::Canister(double height, double diameter, const char* contentName)
+    Canister::Canister(double height, double diameter, const char* contentName) : Canister(contentName) //constructor delegation method
+                                                                                                        //delegate to the other constructor
     {
         m_height = height;
         m_diameter = diameter;
         if (usable()) {        //If the object is usable
             alocpy(m_contentName, contentName); //alocpy data
         }
-
     }
 
     Canister& Canister::clear()
@@ -102,10 +103,10 @@ namespace seneca {
                 m_contentVolume = C.capacity();
             }
             else {
-                C.pour(can);
                 can.m_contentVolume = 0.0;
             }
         }
+        *this = C;
         return *this;
     }
 
