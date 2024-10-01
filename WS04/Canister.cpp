@@ -43,16 +43,17 @@ namespace seneca {
 
     Canister::Canister(const char* contentName)
     {
-        m_contentName = nullptr;
+        m_contentName = nullptr;        //make sure set it to null or the code will never run
         m_diameter = 10.0;
         m_height = 13.0;
         m_contentVolume = 0.0;
         alocpy(m_contentName, contentName);
     }
 
-    Canister::Canister(double height, double diameter, const char* contentName) : Canister(contentName) //constructor delegation method
-                                                                                                        //delegate to the other constructor
+    Canister::Canister(double height, double diameter, const char* contentName)
     {
+        m_contentName = nullptr; //make sure set it to null or the code will never run
+        m_contentVolume = 0.0;
         m_height = height;
         m_diameter = diameter;
         if (usable()) {        //If the object is usable
@@ -70,10 +71,10 @@ namespace seneca {
     Canister& Canister::setContent(const char* contentName)
     {
         if (contentName && contentName[0] && usable()) {
-            if (!(m_contentName && m_contentName[0]) && isEmpty()) {
+            if (!(m_contentName && m_contentName[0]) || isEmpty()) {  //change && to || cause it said "OR"
                 alocpy(m_contentName, contentName);
             }
-            if (!hasSameContent(contentName)) {
+            else if (strcmp(m_contentName,contentName) != 0) {  //if the contentName argument and the object’s content name are not the same
                 setToUnusable();
             }
         }
@@ -96,24 +97,25 @@ namespace seneca {
     Canister& Canister::pour(Canister& can)
     {
         //use usable, volume, capacity, pour(double) and setContent in this logic
-        Canister C = *this;
+        //fixed: no need to create an temporary object
         if (usable()) {
-            if (can.volume() > (C.capacity() - C.volume())) {
-                can.m_contentVolume -= (C.capacity() - C.volume());
-                m_contentVolume = C.capacity();
+            if (can.volume() > (capacity() - volume())) {
+                can.m_contentVolume -= (capacity() - volume());
+                m_contentVolume = capacity();
             }
             else {
+                m_contentVolume += can.volume();  //add content volume to content volume of current object
                 can.m_contentVolume = 0.0;
             }
+
+            setContent(can.m_contentName);          // Set content name or render unusable
         }
-        *this = C;
         return *this;
     }
 
     Canister::~Canister()
     {
-        delete[] m_contentName;
-        m_contentName = nullptr;
+        freeMem(m_contentName);  //use function in cstr to solve this problem
     }
 
     std::ostream& Canister::display() const {
