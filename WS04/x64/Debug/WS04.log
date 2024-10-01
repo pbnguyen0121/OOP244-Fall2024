@@ -1,0 +1,2 @@
+﻿  Canister.cpp
+C:\Users\Mark\source\Fall2024-Seneca\OOP244-Fall2024\WS04\Canister.cpp(54,17): error C2082: redefinition of formal parameter 'contentName'
